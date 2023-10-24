@@ -12,7 +12,7 @@ const NuxtExampleTheme: ThemeDefinition = {
 
 export default {
     theme:{
-        defaultTheme:'NuxtExampleTheme', //set my theme as default
+        defaultTheme:'NuxtExampleTheme', //set my theme name as default
         themes:{
             NuxtExampleTheme, //set my theme
         }

@@ -31,7 +31,7 @@
           Female
         </p>
 
-        <v-btn width="200" variant="outlined" color="primary">
+        <v-btn width="200" variant="elevated" color="primary">
           Update Data
         </v-btn>
 
