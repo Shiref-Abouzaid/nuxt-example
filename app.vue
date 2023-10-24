@@ -1,9 +1,10 @@
 <template>
   <div>
     <NuxtLayout>
-      <div class="pa-2">
+      <v-container>
         <NuxtPage />
-      </div>
+      </v-container>
+
     </NuxtLayout>
 
   </div>

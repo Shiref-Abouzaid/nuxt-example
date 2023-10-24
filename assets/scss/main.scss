@@ -1,0 +1,19 @@
+//import variables
+@import "variables";
+
+//create loop for gap-1 through gap-10
+@for $i from 1 through 10 {
+    .gap-#{$i} {
+      gap: #{$i * 4}px;
+    }
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.page-title {
+    color: $gray-light;
+    font-size: 1rem;
+    margin: 2rem 0;
+}
