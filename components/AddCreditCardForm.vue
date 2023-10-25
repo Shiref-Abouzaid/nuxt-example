@@ -75,7 +75,7 @@ const cardNumberRules = ref([
         return 'Card Number is required.'
     },
 
-    (value: string) => /^\d{16}$/.test(value) || 'CVV must be a 16-digit number'
+    (value: string) => /^\d{16}$/.test(value) || 'Card number must be a 16-digit number'
 ]);
 
 const cvvRules = ref([
