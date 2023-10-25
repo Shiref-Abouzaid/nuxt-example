@@ -1,5 +1,5 @@
 <template>
-    <v-form class="my-4" validate-on="lazy" @submit.prevent="submit" v-model="valid">
+    <v-form class="my-4" validate-on="submit lazy" @submit.prevent="submit" v-model="valid">
         <v-row class="d-flex justify-center">
             <v-col sm="6" class="d-flex flex-column gap-3">
                 <v-text-field :rules="cardHolderRules" v-model="cardHolder" label="Card Holder">
@@ -26,7 +26,7 @@
                     </v-col>
 
                     <v-col>
-                        <v-text-field :rules="cvvRules" v-model="cvv" label="CVV" :maxlength="3" />
+                        <v-text-field :rules="cvvRules" v-model="cvv" label="CVV" :maxlength="3" counter="3"/>
                     </v-col>
                 </v-row>
 
@@ -74,10 +74,9 @@ const cardNumberRules = ref([
         return 'Card Number is required.'
     },
 
-    (value: string) => {
-        if (value?.length == 16) return true
-        return 'Card Number must be 16 characters.'
-    },
+
+
+    (value: string) => /^\d{16}$/.test(value) || 'CVV must be a 16-digit number'
 ]);
 
 const cvvRules = ref([
