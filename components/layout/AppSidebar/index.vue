@@ -14,8 +14,8 @@
                 <v-divider></v-divider>
 
                 <v-list density="compact" nav>
-                    <v-list-item prepend-icon="mdi-account" active-color="#4DBB7E" to="/">Profile</v-list-item>
-                    <v-list-item prepend-icon="mdi-credit-card" active-color="#4DBB7E" to="/addCreditCard">Add Credit Card</v-list-item>
+                    <v-list-item prepend-icon="mdi-account" color="#4DBB7E" to="/">Profile</v-list-item>
+                    <v-list-item prepend-icon="mdi-credit-card" color="#4DBB7E" to="/addCreditCard">Add Credit Card</v-list-item>
                 </v-list>
             </v-navigation-drawer>
 

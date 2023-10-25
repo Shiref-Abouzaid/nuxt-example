@@ -5,8 +5,8 @@
         </div>
 
         <v-card>
-            <v-form class="my-4" validate-on="lazy" @submit.prevent="submit"  v-model="valid">
-                <v-row class="d-flex justify-center" >
+            <v-form class="my-4" validate-on="lazy" @submit.prevent="submit" v-model="valid">
+                <v-row class="d-flex justify-center">
                     <v-col sm="6" class="d-flex flex-column gap-3">
                         <v-text-field :rules="cardHolderRules" v-model="cardHolder" label="Card Holder">
                             <template #append-inner>
@@ -19,7 +19,7 @@
                             </template>
                         </v-text-field>
 
-                        <v-text-field :rules="cardNumberRules"  v-model="cardNumber"  label="Card Number" type="number">
+                        <v-text-field :rules="cardNumberRules" v-model="cardNumber" label="Card Number" type="number">
                             <template #append-inner>
                                 <v-img :src="cardIcon" alt="My Icon" width="50" height="50"></v-img>
                             </template>
@@ -27,12 +27,12 @@
 
                         <v-row>
                             <v-col>
-                                <v-text-field v-model="expiryDate" v-expire-date label="Expiration Date"
-                                    append-inner-icon="mdi-calendar-blank" />
+                                <v-text-field v-model="expiryDate" :rules="expireyDateRules" label="Expiration Date"
+                                    @keyup="formateExpireDate" :maxlength="5" append-inner-icon="mdi-calendar-blank" />
                             </v-col>
 
                             <v-col>
-                                <v-text-field :rules="cvvRules" v-model="cvv" type="number" label="CVV" maxlength="3" />
+                                <v-text-field :rules="cvvRules" v-model="cvv" label="CVV" :maxlength="3" />
                             </v-col>
                         </v-row>
 
@@ -62,7 +62,7 @@ const cardHolderRules = ref([
         if (value) return true
         return 'Card Holder is required.'
     },
-    
+
     (value: string) => {
         if (value?.length < 22) return true
         return 'Name must be less than 22 characters.'
@@ -74,7 +74,7 @@ const cardNumberRules = ref([
         if (value) return true
         return 'Card Number is required.'
     },
-    
+
     (value: string) => {
         if (value?.length == 16) return true
         return 'Card Number must be 16 characters.'
@@ -86,12 +86,22 @@ const cvvRules = ref([
         if (value) return true
         return 'CVV is required.'
     },
-    
-    (value: string) => {
-        if (value?.length == 3) return true
-        return 'CVV must be 3 characters.'
-    },
+
+    (value: string) => /^\d{3}$/.test(value) || 'CVV must be a 3-digit number'
 ]);
+
+const expireyDateRules = ref([
+    (value: string) => {
+        if (value) return true
+        return 'Expire date is required.'
+    },
+
+    (value: string) => {
+        if (Number(`${value[0]}${value[1]}`) < 13) return true
+        return 'invalid month'
+    }
+])
+
 const cardIcon = computed(() => {
     if (cardNumber.value.startsWith('4')) {
         return VisaIcon;
@@ -105,7 +115,15 @@ const cardIcon = computed(() => {
 
 
 function submit() {
-    if(!valid.value) return;
+    if (!valid.value) return;
     alert('submit')
 }
+
+function formateExpireDate(event: KeyboardEvent) {
+    if (expiryDate.value.length == 2 && event.key != 'Backspace') {
+        expiryDate.value += "/"
+    }
+
+}
 </script>
+
