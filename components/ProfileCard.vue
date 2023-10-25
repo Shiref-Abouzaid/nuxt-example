@@ -25,7 +25,7 @@
           {{ profileData.gender }}
         </p>
 
-        <v-btn width="200" variant="elevated" color="primary" @click="updateProfile">
+        <v-btn width="200" variant="elevated" color="primary" @click="updateProfile" :loading="updateProfileLoading">
           Update Data
         </v-btn>
 
@@ -36,6 +36,7 @@
 <script setup lang="ts">
 import { getProfileData } from '~/api/profile';
 
+const updateProfileLoading = ref<boolean>(false);
 const profileData = ref<any>({
     age:29,
     gender:'female',
@@ -46,10 +47,10 @@ const profileData = ref<any>({
 });
 
 async function updateProfile() {
+    updateProfileLoading.value = true;
     const randomUserId = Math.floor(Math.random() * 30) + 1;
-
     const response = await getProfileData(String(randomUserId));
-
+    updateProfileLoading.value = false;
     profileData.value = response.value;
 
 }

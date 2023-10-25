@@ -32,7 +32,7 @@
                 </v-row>
 
                 <div class="d-flex justify-end">
-                    <v-btn color="primary" variant="elevated" type="submit">Add Credit Card</v-btn>
+                    <v-btn color="primary" variant="elevated" type="submit" :loading="addCardLoading">Add Credit Card</v-btn>
                 </div>
 
                 <div>
@@ -55,7 +55,7 @@ const cardNumber = ref<string>('');
 const cvv = ref<string>('');
 const valid = ref<boolean>(false);
 const errorMessage = ref<string>('');
-
+const addCardLoading = ref<boolean>(false);
 
 const cardHolderRules = ref([
     (value: string) => {
@@ -113,7 +113,7 @@ const cardIcon = computed(() => {
 
 async function submit() {
     if (!valid.value) return;
-
+    addCardLoading.value = true;
     let cardBody = {
         primaryAccountNumber: cardNumber.value,
         acquirerCountryCode: "682",
@@ -123,11 +123,12 @@ async function submit() {
 
     try {
         const validationResult = await validateCard(cardBody);
-        console.log(validationResult);
+        addCardLoading.value = false;
     } catch (error: any) {
         errorMessage.value = error.message;
+        addCardLoading.value = false;
     }
-
+    
 }
 
 function formateExpireDate(event: KeyboardEvent) {
