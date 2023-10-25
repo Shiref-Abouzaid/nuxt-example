@@ -17,5 +17,5 @@ export const validateCard = async (body: any) => {
 
     return response.data;
 
-
+    // here we got CORS Error because we are using sandbox api and we are not using the real api
 }

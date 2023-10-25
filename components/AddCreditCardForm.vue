@@ -13,7 +13,8 @@
                     </template>
                 </v-text-field>
 
-                <v-text-field :rules="cardNumberRules" counter="16" :maxlength="16" v-model="cardNumber" label="Card Number" >
+                <v-text-field :rules="cardNumberRules" counter="16" :maxlength="16" v-model="cardNumber"
+                    label="Card Number">
                     <template #append-inner>
                         <v-img :src="cardIcon" alt="My Icon" width="50" height="50"></v-img>
                     </template>
@@ -26,7 +27,7 @@
                     </v-col>
 
                     <v-col>
-                        <v-text-field :rules="cvvRules" v-model="cvv" label="CVV" :maxlength="3" counter="3"/>
+                        <v-text-field :rules="cvvRules" v-model="cvv" label="CVV" :maxlength="3" counter="3" />
                     </v-col>
                 </v-row>
 
@@ -46,7 +47,7 @@
 import VisaIcon from '~/assets/svg/icons/icons-visa.svg';
 import MasterCardIcon from '~/assets/svg/icons/icons-mastercard.svg';
 import unKownCardIcon from '~/assets/svg/icons/icons-unknown-card.svg';
-import { validateCard } from '~/api/addCreditCard'
+import { validateCard } from '~/api/payment'
 
 const cardHolder = ref<string>('');
 const expiryDate = ref<string>('');
@@ -73,8 +74,6 @@ const cardNumberRules = ref([
         if (value) return true
         return 'Card Number is required.'
     },
-
-
 
     (value: string) => /^\d{16}$/.test(value) || 'CVV must be a 16-digit number'
 ]);
@@ -126,14 +125,20 @@ async function submit() {
         const validationResult = await validateCard(cardBody);
         console.log(validationResult);
     } catch (error: any) {
-        console.error("Failed to validate card:", error.message);
+        errorMessage.value = error.message;
     }
 
 }
 
 function formateExpireDate(event: KeyboardEvent) {
+    //set slash "/" btween month and year and handle backspace
+
     if (expiryDate.value.length == 2 && event.key != 'Backspace') {
         expiryDate.value += "/"
+    }
+
+    if(expiryDate.value.length == 3 && expiryDate.value[2] != "/"){
+        expiryDate.value = expiryDate.value.slice(0,2) + "/" + expiryDate.value.slice(2,3)
     }
 
 }

@@ -6,7 +6,6 @@ export default defineNuxtConfig({
     "/addCreditCard": { ssr: true }, // make only this page SSR to be more secure 
   },
 
-
   devtools: { enabled: true },
 
   css: [
@@ -23,7 +22,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "@/assets/scss/variables.scss" as *;',
+          additionalData: '@use "@/assets/scss/variables.scss" as *;', // import my variables in all scss (scoped) template style files
         },
       },
     },

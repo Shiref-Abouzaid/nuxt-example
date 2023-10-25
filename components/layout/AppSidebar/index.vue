@@ -11,8 +11,8 @@
                 <v-divider></v-divider>
 
                 <v-list density="compact" nav>
-                    <v-list-item prepend-icon="mdi-account" color="#4DBB7E" to="/">Profile</v-list-item>
-                    <v-list-item prepend-icon="mdi-credit-card" color="#4DBB7E" to="/addCreditCard">Add Credit
+                    <v-list-item prepend-icon="mdi-account" height="50" color="#4DBB7E" to="/">Profile</v-list-item>
+                    <v-list-item prepend-icon="mdi-credit-card" height="50" color="#4DBB7E" to="/addCreditCard">Add Credit
                         Card</v-list-item>
                 </v-list>
             </v-navigation-drawer>
@@ -25,3 +25,7 @@
 <script setup lang="ts">
 const rail = ref<boolean>(true);
 </script>
+
+<style scoped lang="scss">
+
+</style>

@@ -10,5 +10,9 @@
     </div>
 </template>
 
-
+<script setup lang="ts">
+useHead(() => ({
+  title: 'Add Credit Card',
+}));
+</script>
 
