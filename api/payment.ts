@@ -3,10 +3,9 @@
 
 // this url for this external service , we can set our default url globaly in nuxt.config.ts
 
-export const validateCard = async (body: any) => {
-    const response = await useFetch(`https://sandbox.api.visa.com/pav/v1/cardvalidation/`, {
-        method: 'POST',
-        body
+export const validateCard = async (number: any) => {
+    const response = await useFetch(`https://lookup.binlist.net/${number}`, {
+        method: 'GET'
     });
 
 
@@ -16,6 +15,4 @@ export const validateCard = async (body: any) => {
 
 
     return response.data;
-
-    // here we got CORS Error because we are using sandbox api and we are not using the real api
 }

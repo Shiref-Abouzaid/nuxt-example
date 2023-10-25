@@ -1,5 +1,5 @@
 <template>
-    <v-form class="my-4" validate-on="submit lazy" @submit.prevent="submit" v-model="valid">
+    <v-form class="my-4" validate-on="lazy" @submit.prevent="submit" v-model="valid" >
         <v-row class="d-flex justify-center">
             <v-col sm="6" class="d-flex flex-column gap-3">
                 <v-text-field :rules="cardHolderRules" v-model="cardHolder" label="Card Holder">
@@ -36,7 +36,16 @@
                 </div>
 
                 <div>
-                    <v-alert color="error" type="error" closable v-if="errorMessage">{{ errorMessage }}</v-alert>
+                    <v-alert color="error" type="error"  v-if="errorMessage">
+                        {{ errorMessage }}
+
+                    </v-alert>
+
+                    <small v-if="errorMessage" >(Try this valid (4254888558888888))</small>
+
+                    <v-alert color="primary" v-if="successMessage">
+                        {{ successMessage  }}
+                    </v-alert>
                 </div>
             </v-col>
         </v-row>
@@ -55,6 +64,7 @@ const cardNumber = ref<string>('');
 const cvv = ref<string>('');
 const valid = ref<boolean>(false);
 const errorMessage = ref<string>('');
+const successMessage = ref<string>('');
 const addCardLoading = ref<boolean>(false);
 
 const cardHolderRules = ref([
@@ -110,22 +120,18 @@ const cardIcon = computed(() => {
 
 })
 
-
 async function submit() {
     if (!valid.value) return;
     addCardLoading.value = true;
-    let cardBody = {
-        primaryAccountNumber: cardNumber.value,
-        acquirerCountryCode: "682",
-        acquiringBin: cardNumber.value.slice(0, 6),
-        cardExpiryDate: expiryDate.value,
-    }
+    successMessage.value = '';
+    errorMessage.value = '';
 
     try {
-        const validationResult = await validateCard(cardBody);
+        await validateCard(cardNumber.value.slice(0,8));
+        successMessage.value = 'Valid Card';
         addCardLoading.value = false;
-    } catch (error: any) {
-        errorMessage.value = error.message;
+    } catch (error) {
+        errorMessage.value = 'Invalid Card Number';
         addCardLoading.value = false;
     }
     

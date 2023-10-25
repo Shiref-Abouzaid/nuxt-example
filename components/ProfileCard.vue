@@ -12,7 +12,7 @@
 
         <p>
           <span>Birth of date: </span>
-          06/12/1994
+          06/12/{{ birthDate }}
         </p>
 
         <p>
@@ -37,6 +37,7 @@
 import { getProfileData } from '~/api/profile';
 
 const updateProfileLoading = ref<boolean>(false);
+
 const profileData = ref<any>({
     age:29,
     gender:'female',
@@ -46,9 +47,13 @@ const profileData = ref<any>({
     
 });
 
+const birthDate = computed(()=>{
+    return new Date().getFullYear() - profileData.value.age;
+})
+
 async function updateProfile() {
     updateProfileLoading.value = true;
-    const randomUserId = Math.floor(Math.random() * 30) + 1;
+    const randomUserId = Math.floor(Math.random() * 100) + 1;
     const response = await getProfileData(String(randomUserId));
     updateProfileLoading.value = false;
     profileData.value = response.value;
