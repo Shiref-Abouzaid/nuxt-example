@@ -40,7 +40,6 @@
   </v-card>
 </template>
 
-
 <style scoped lang="scss">
 h2 {
   color: $gray;
