@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  
+
   routeRules: {
     "/**": { ssr: false }, // make all pages SPA, in dashboards we don't need SEO / server side rendering 
     "/addCreditCard": { ssr: true }, // make only this page SSR to be more secure 
